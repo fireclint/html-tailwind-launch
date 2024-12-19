@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+      integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>Data Solutions</title>
+    <style>
+      * {
+        font-family: Montserrat;
+      }
+
+      .blur-overlay {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 15%;
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      .blur-overlay.left {
+        left: 0;
+        background: linear-gradient(
+          to right,
+          rgba(0, 0, 0, 1),
+          rgba(0, 0, 0, 0)
+        );
+      }
+      .blur-overlay.right {
+        right: 0;
+        background: linear-gradient(
+          to left,
+          rgba(0, 0, 0, 1),
+          rgba(0, 0, 0, 0)
+        );
+      }
+
+      .masonry {
+        column-count: 3;
+        column-gap: 20px;
+      }
+
+      .item {
+        width: 100%;
+        margin-bottom: 20px;
+        padding: 20px;
+        display: inline-block;
+        border: 2px solid #38bdf820;
+        background-color: "#0a0a0f60";
+        border-radius: 8px;
+        box-shadow: 0 4px, 6px rgba(0, 0, 0, 0.1);
+        box-sizing: border-box;
+        color: gray;
+        transition: transform 0.3s;
+      }
+
+      @media (max-width: 768px) {
+        .masonry {
+          column-count: 2;
+        }
+      }
+      @media (max-width: 580px) {
+        .masonry {
+          column-count: 1;
+        }
+      }
+
+      .item:hover {
+        transform: translateY(-10px);
+      }
+    </style>
+  </head>
+  <body class="bg-black text-white">
+    <!-- Navbar -->
+    <div>
+      <!-- Desktop nav -->
+      <div
+        class="grid grid-cols-3 items-center h-20 p-4 border-b-[1px] border-gray-800"
+      >
+        <h1 class="font-bold text-xl text-gray-200">
+          <i class="fa-database fa-solid text-[#38bdf8]"></i> dtsolutions
+        </h1>
+        <div>
+          <ul
+            class="hidden md:flex space-x-16 text-gray-100 text-sm justify-center"
+          >
+            <li class="hover:cursor-pointer">Products</li>
+            <li class="hover:cursor-pointer">Enterprise</li>
+            <li class="hover:cursor-pointer">Pricing</li>
+          </ul>
+        </div>
+        <button
+          class="hidden md:block justify-self-end bg-[#38bdf8] text-black text-sm px-2 py-1 rounded"
+        >
+          Dashboard
+        </button>
+        <div class="flex justify-end md:hidden">
+          <i id="hamburger" class="fa-solid fa-bars hover:cursor-pointer"></i>
+        </div>
+      </div>
+      <!-- Mobile nav -->
+      <div
+        id="mobileMenu"
+        class="hidden flex flex-col border-b-[1px] border-gray-800 text-center bg-black px-4 py-2"
+      >
+        <a href="#" class="text-sm p-6 hover:underline">Products</a>
+        <a href="#" class="text-sm p-6 hover:underline">Enterprise</a>
+        <a href="#" class="text-sm p-6 hover:underline">Pricing</a>
+        <a
+          href="#"
+          class="my-6 block w-24 m-auto text-sm bg-white text-black rounded px-2 py-1 hover:bg-gray-300 duration-300"
+          >Dashboard</a
+        >
+      </div>
+    </div>
+    <!-- Hero -->
+    <div
+      class="relative min-h-[80vh] flex items-center justify-center inset-0 bg-[size:24px_24px] bg-[position:-1px_-1px] bg-[linear-gradient(to_right,#ffffff20,transparent_1px),linear-gradient(to_bottom,#ffffff20,transparent_1px)]"
+    >
+      <div
+        class="absolute sm:max-w-[50%] w-full h-full bg-black blur-[80px] opacity-70"
+      ></div>
+      <div class="max-w-4xl text-center z-10">
+        <div>
+          <p class="text-[#38bdf8] font-bold">BIG DATA ANALYTICS</p>
+          <h1 class="text-6xl font-semibold py-6">Launch in a Weekend</h1>
+          <h2 class="text-3xl pb-8 text-[#38bdf8]">Scale to millions</h2>
+          <div class="space-x-4">
+            <button
+              class="bg-[#089bdc] hover:bg-[#38bdf8] duration-200 ease-in text-sm text-black px-4 py-2 rounded"
+            >
+              Get Started
+            </button>
+            <button class="bg-gray-600 px-4 py-2 rounded text-sm">
+              Documentation
+            </button>
+          </div>
+        </div>
+        <!-- Scrolling Container -->
+        <div
+          class="max-w-[400px] sm:max-w-[600px] m-auto text-gray-600 pt-12 flex overflow-x-hidden whitespace-nowrap relative"
+        >
+          <div class="blur-overlay left"></div>
+          <div class="blur-overlay right"></div>
+          <div id="slider" class="flex whitespace-nowrap">
+            <span class="inline-block py-2 px-4 text-sm flex items-center">
+              <i class="fa-brands fa-kickstarter text-2xl pr-1"> </i>Kickstarter
+            </span>
+            <span class="inline-block py-2 px-4 text-sm flex items-center">
+              <i class="fa-brands fa-github text-2xl pr-1"> </i>Github
+            </span>
+            <span class="inline-block py-2 px-4 text-sm flex items-center">
+              <i class="fa-brands fa-docker text-2xl pr-1"> </i>Infrastructure
+            </span>
+            <span class="inline-block py-2 px-4 text-sm flex items-center">
+              <i class="fa-brands fa-kickstarter text-2xl pr-1"> </i>Kickstarter
+            </span>
+            <span class="inline-block py-2 px-4 text-sm flex items-center">
+              <i class="fa-brands fa-paypal text-2xl pr-1"> </i>Paypal
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Section 1 -->
+    <div>
+      <div class="text-center py-20">
+        <h2 class="text-2xl">Built for the start-up development team.</h2>
+        <p class="text-3xl py-3 text-gray-400">
+          Scalable to the enterprise business worldwide.
+        </p>
+      </div>
+      <div
+        class="max-w-[1300px] m-auto text-gray-400 grid grid-cols-2 md:grid-cols-4 px-4 pb-20"
+      >
+        <div
+          class="flex items-center justify-center space-x-2 border border-[#38bdf820] h-[80px]"
+        >
+          <i class="fa-brands fa-slack"></i>
+          <p>Slack</p>
+        </div>
+        <div
+          class="flex items-center justify-center space-x-2 border border-[#38bdf820] h-[80px]"
+        >
+          <i class="fa-brands fa-paypal"></i>
+          <p>Paypal</p>
+        </div>
+        <div
+          class="flex items-center justify-center space-x-2 border border-[#38bdf820] h-[80px]"
+        >
+          <i class="fa-brands fa-algolia"></i>
+          <p>Algolia</p>
+        </div>
+        <div
+          class="flex items-center justify-center space-x-2 border border-[#38bdf820] h-[80px]"
+        >
+          <i class="fa-brands fa-dropbox"></i>
+          <p>Dropbox</p>
+        </div>
+        <div
+          class="flex items-center justify-center space-x-2 border border-[#38bdf820] h-[80px]"
+        >
+          <i class="fa-brands fa-cloudflare"></i>
+          <p>Cloudflare</p>
+        </div>
+        <div
+          class="flex items-center justify-center space-x-2 border border-[#38bdf820] h-[80px]"
+        >
+          <i class="fa-brands fa-salesforce"></i>
+          <p>Salesforce</p>
+        </div>
+        <div
+          class="flex items-center justify-center space-x-2 border border-[#38bdf820] h-[80px]"
+        >
+          <i class="fa-brands fa-waze"></i>
+          <p>Waze</p>
+        </div>
+        <div
+          class="flex items-center justify-center space-x-2 border border-[#38bdf820] h-[80px]"
+        >
+          <i class="fa-brands fa-trello"></i>
+          <p>Trello</p>
+        </div>
+      </div>
+    </div>
+    <!-- Section 2 -->
+    <div class="pt-24">
+      <div class="text-center py-8">
+        <h2 class="text-3xl">Our Engagement</h2>
+        <p
+          class="bg-[#38bdf840] text-[#38bdf8] inline-block text-3xl p-2 m-3 font-semibold"
+        >
+          Who's using our platform?
+        </p>
+      </div>
+      <div
+        class="max-w-[1300px] m-auto text-gray-400 grid grid-cols-1 md:grid-cols-3 p-4 pb-20"
+      >
+        <div
+          class="border border-[#38bdf820] h-[175px] md:h-[210px] flex flex-col items-center justify-center"
+        >
+          <p class="text-6xl font-semibold text-[#38bdf8]">1M+</p>
+          <p class="flex items-center pt-6">
+            <i class="fa-brands fa-npm pr-2"></i> installs/month
+          </p>
+        </div>
+        <div
+          class="border border-[#38bdf820] h-[175px] md:h-[210px] flex flex-col items-center justify-center"
+        >
+          <p class="text-6xl font-semibold text-[#38bdf8]">40k</p>
+          <p class="flex items-center pt-6">
+            <i class="fa-brands fa-github pr-2"></i> github stars
+          </p>
+        </div>
+        <div
+          class="border border-[#38bdf820] h-[175px] md:h-[210px] flex flex-col items-center justify-center"
+        >
+          <p class="text-6xl font-semibold text-[#38bdf8]">11k</p>
+          <p class="flex items-center pt-6">
+            <i class="fa-brands fa-slack pr-2"></i> team members
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- Section 3 -->
+    <div class="max-w-[1300px] m-auto py-20">
+      <div class="text-center pb-8">
+        <h2 class="text-[#fafafa] text-3xl">Reviews</h2>
+        <p
+          class="bg-[#38bdf840] text-[#38bdf8] inline-block text-3xl p-2 m-3 font-semibold"
+        >
+          What are people saying?
+        </p>
+      </div>
+      <div class="masonry">
+        <div class="item">
+          <span class="bg-gray-300 rounded-full text-black p-3">CC</span>
+          <span class="pl-1 text-gray-300 text-[15px]">@codecommerce</span>
+          <p class="pt-8 text-gray-400">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque
+            nobis, ipsa nisi ipsam saepe expedita assumenda ab. Reprehenderit
+            corporis animi possimus alias commodi?
+          </p>
+        </div>
+        <div class="item">
+          <span class="bg-gray-300 rounded-full text-black p-3">CC</span>
+          <span class="pl-1 text-gray-300 text-[15px]">@codecommerce</span>
+          <p class="pt-8 text-gray-400">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque
+            nobis, ipsa nisi ipsam saepe expedita assumenda ab.
+          </p>
+        </div>
+        <div class="item">
+          <span class="bg-gray-300 rounded-full text-black p-3">CC</span>
+          <span class="pl-1 text-gray-300 text-[15px]">@codecommerce</span>
+          <p class="pt-8 text-gray-400">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque
+            nobis, ipsa nisi ipsam saepe expedita assumenda ab. Reprehenderit
+            corporis
+          </p>
+        </div>
+        <div class="item">
+          <span class="bg-gray-300 rounded-full text-black p-3">CC</span>
+          <span class="pl-1 text-gray-300 text-[15px]">@codecommerce</span>
+          <p class="pt-8 text-gray-400">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque
+            nobis, ipsa nisi ipsam saepe expedita assumenda ab. Reprehenderit
+            corporis animi possimus alias commodi? Minima dolorum.
+          </p>
+        </div>
+        <div class="item">
+          <span class="bg-gray-300 rounded-full text-black p-3">CC</span>
+          <span class="pl-1 text-gray-300 text-[15px]">@codecommerce</span>
+          <p class="pt-8 text-gray-400">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque
+            nobis, ipsa nisi ipsam saepe expedita assumenda ab. Reprehenderit
+            corporis animi possimus alias commodi? Minima dolorum.
+          </p>
+        </div>
+        <div class="item">
+          <span class="bg-gray-300 rounded-full text-black p-3">CC</span>
+          <span class="pl-1 text-gray-300 text-[15px]">@codecommerce</span>
+          <p class="pt-8 text-gray-400">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque
+            nobis, ipsa nisi ipsam saepe expedita assumenda ab. Reprehenderit
+            corporis animi possimus alias commodi? Minima dolorum.
+          </p>
+        </div>
+        <div class="item">
+          <span class="bg-gray-300 rounded-full text-black p-3">CC</span>
+          <span class="pl-1 text-gray-300 text-[15px]">@codecommerce</span>
+          <p class="pt-8 text-gray-400">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque
+            nobis, ipsa nisi ipsam saepe.
+          </p>
+        </div>
+        <div class="item">
+          <span class="bg-gray-300 rounded-full text-black p-3">CC</span>
+          <span class="pl-1 text-gray-300 text-[15px]">@codecommerce</span>
+          <p class="pt-8 text-gray-400">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque
+            nobis, ipsa nisi ipsam saepe expedita assumenda ab. Reprehenderit
+            corporis animi possimus alias commodi?
+          </p>
+        </div>
+        <div class="item">
+          <span class="bg-gray-300 rounded-full text-black p-3">CC</span>
+          <span class="pl-1 text-gray-300 text-[15px]">@codecommerce</span>
+          <p class="pt-8 text-gray-400">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque
+            nobis, ipsa nisi ipsam saepe expedita assumenda ab. Reprehenderit
+            corporis animi possimus
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div
+      class="max-w-[1300px] m-auto px-4 py-16 grid grid-cols-1 sm:grid-cols-2 border-t-[1px] border-gray-800"
+    >
+      <div class="col-span-1 space-y-6">
+        <h1 class="font-bold text-xl">
+          <i class="fa-solid fa-database text-[#38bdf8]"></i> dtsolutions
+        </h1>
+        <p class="text-gray-500">Project by Data Solutions Systems 2024</p>
+        <p class="text-gray-500">Deployed on Vercel</p>
+        <p class="text-gray-500">Maintained by CodeCommerce</p>
+      </div>
+      <div class="col-span-1 pt-4 sm:pt-0">
+        <div class="grid grid-cols-3">
+          <ul class="col-span-1 space-y-4 text-sm">
+            <li>Documentation</li>
+            <li class="text-slate-500">Platform Overview</li>
+            <li class="text-slate-500">Why Data Solutions</li>
+            <li class="text-slate-500">DS Cost & Optimization</li>
+            <li class="text-slate-500">DS Security</li>
+          </ul>
+          <ul class="col-span-1 space-y-4 text-sm">
+            <li>Developer</li>
+            <li class="text-slate-500">Solutions Center</li>
+            <li class="text-slate-500">Open Source</li>
+            <li class="text-slate-500">Builder Education</li>
+            <li class="text-slate-500">Downloads</li>
+          </ul>
+          <ul class="col-span-1 space-y-4 text-sm">
+            <li>Connect</li>
+            <li class="text-slate-500">Engineering Blog</li>
+            <li class="text-slate-500">Community</li>
+            <li class="text-slate-500">Support</li>
+            <li class="text-slate-500">Event</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    const hamburger = document.getElementById("hamburger");
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    hamburger.addEventListener("click", () => {
+      mobileMenu.classList.toggle("hidden");
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const slider = document.getElementById("slider");
+      const sliderWidth = slider.scrollWidth;
+
+      //   clone content for infinite loop
+      const clone = slider.cloneNode(true);
+      slider.parentElement.appendChild(clone);
+
+      //   animation
+      let offset = 0;
+
+      const animateSlider = () => {
+        offset -= 0.2;
+        if (Math.abs(offset) >= sliderWidth) {
+          offset = 0;
+        }
+        slider.style.transform = `translateX(${offset}px)`;
+        slider.nextElementSibling.style.transform = `translateX(${offset}px)`;
+        requestAnimationFrame(animateSlider);
+      };
+      animateSlider();
+    });
+  </script>
+</html>
